@@ -1,163 +1,29 @@
 [
   {
-    "episode_id": "a1584e2b-540e-49da-a510-43679cb0e830",
-    "product": {
-      "name": "1987 Porsche 944",
-      "category": "vehicles",
-      "description": "Original paint, 112k miles. Recent timing belt. Some rust on undercarriage, drives well.",
-      "market_price": 12550,
-      "haggle_norm": "high",
-      "typical_discount_pct": 15
-    },
-    "valuations": {
-      "buyer_true_value": 9260,
-      "seller_reserve_price": 9310,
-      "market_price": 12550,
-      "zopa": null,
-      "zopa_width": 0,
-      "deal_possible": false,
-      "difficulty": "no_deal",
-      "suggested_buyer_anchor": 6080
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: 1987 Porsche 944\nDESCRIPTION: Original paint, 112k miles. Recent timing belt. Some rust on undercarriage, drives well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $9260.\n- You believe the fair market value is around $12550.\n- If you pay less than $9260, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $9260.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: 1987 Porsche 944\nDESCRIPTION: Original paint, 112k miles. Recent timing belt. Some rust on undercarriage, drives well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $9310.\n- You know the fair market value is around $12550.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $9310.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "7fac08f8-3e92-408f-b8d1-478f88d6f888",
-    "product": {
-      "name": "Pioneer SX-1250 Stereo Receiver",
-      "category": "electronics",
-      "description": "1976 flagship receiver, 160W per channel. Recently serviced, all functions working.",
-      "market_price": 1830,
-      "haggle_norm": "medium",
-      "typical_discount_pct": 20
-    },
-    "valuations": {
-      "buyer_true_value": 1520,
-      "seller_reserve_price": 830,
-      "market_price": 1830,
-      "zopa": [
-        830,
-        1520
-      ],
-      "zopa_width": 690,
-      "deal_possible": true,
-      "difficulty": "easy",
-      "suggested_buyer_anchor": 1100
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Pioneer SX-1250 Stereo Receiver\nDESCRIPTION: 1976 flagship receiver, 160W per channel. Recently serviced, all functions working.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1520.\n- You believe the fair market value is around $1830.\n- If you pay less than $1520, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1520.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Pioneer SX-1250 Stereo Receiver\nDESCRIPTION: 1976 flagship receiver, 160W per channel. Recently serviced, all functions working.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $830.\n- You know the fair market value is around $1830.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $830.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "bef8001d-57aa-455a-89a6-4fcc0b075d80",
-    "product": {
-      "name": "Signed Pel\u00e9 Football Shirt (1970 World Cup)",
-      "category": "collectibles",
-      "description": "Brazil yellow jersey signed in black marker. COA included. Framed, minor fading.",
-      "market_price": 4360,
-      "haggle_norm": "high",
-      "typical_discount_pct": 10
-    },
-    "valuations": {
-      "buyer_true_value": 2640,
-      "seller_reserve_price": 3210,
-      "market_price": 4360,
-      "zopa": null,
-      "zopa_width": 0,
-      "deal_possible": false,
-      "difficulty": "no_deal",
-      "suggested_buyer_anchor": 1720
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Signed Pel\u00e9 Football Shirt (1970 World Cup)\nDESCRIPTION: Brazil yellow jersey signed in black marker. COA included. Framed, minor fading.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $2640.\n- You believe the fair market value is around $4360.\n- If you pay less than $2640, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $2640.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Signed Pel\u00e9 Football Shirt (1970 World Cup)\nDESCRIPTION: Brazil yellow jersey signed in black marker. COA included. Framed, minor fading.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $3210.\n- You know the fair market value is around $4360.\n- You have sold many items like this. Typical buyers discount by 10%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $3210.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "9dfb366b-6745-4836-8690-de0a1b9fa523",
-    "product": {
-      "name": "Victorian Mahogany Writing Desk",
-      "category": "antiques",
-      "description": "Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.",
-      "market_price": 770,
-      "haggle_norm": "high",
-      "typical_discount_pct": 25
-    },
-    "valuations": {
-      "buyer_true_value": 500,
-      "seller_reserve_price": 400,
-      "market_price": 770,
-      "zopa": [
-        400,
-        500
-      ],
-      "zopa_width": 100,
-      "deal_possible": true,
-      "difficulty": "medium",
-      "suggested_buyer_anchor": 360
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $500.\n- You believe the fair market value is around $770.\n- If you pay less than $500, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $500.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $400.\n- You know the fair market value is around $770.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou know this piece's provenance, comparable auction results, and restoration costs. You're aware that serious collectors pay premium prices and that scarcity drives value in this category.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $400.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "5684f230-2dd1-4954-b923-b4d2bb4e096c",
+    "episode_id": "4488ec1a-0c68-4c45-a728-6ea38b233b09",
     "product": {
       "name": "Oil Painting \u2014 French Countryside (1940s)",
       "category": "art",
       "description": "Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.",
-      "market_price": 1930,
+      "market_price": 1720,
       "haggle_norm": "high",
       "typical_discount_pct": 30
     },
     "valuations": {
-      "buyer_true_value": 1320,
-      "seller_reserve_price": 1130,
-      "market_price": 1930,
+      "buyer_true_value": 1090,
+      "seller_reserve_price": 1060,
+      "market_price": 1720,
       "zopa": [
-        1130,
-        1320
+        1060,
+        1090
       ],
-      "zopa_width": 190,
+      "zopa_width": 30,
       "deal_possible": true,
       "difficulty": "hard",
-      "suggested_buyer_anchor": 960
+      "suggested_buyer_anchor": 700
     },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1320.\n- You believe the fair market value is around $1930.\n- If you pay less than $1320, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1320.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1130.\n- You know the fair market value is around $1930.\n- You have sold many items like this. Typical buyers discount by 30%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1130.",
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1090.\n- You believe the fair market value is around $1720.\n- If you pay less than $1090, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1090.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1060.\n- You know the fair market value is around $1720.\n- You have sold many items like this. Typical buyers discount by 30%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1060.",
     "information_asymmetry": {
       "seller_context": "full",
       "buyer_context": "sparse"
@@ -169,30 +35,65 @@
     }
   },
   {
-    "episode_id": "6352bfde-953f-4b56-a4ae-aa36771d53b5",
+    "episode_id": "0d6db254-9139-4061-ad29-97ca5ca2e95c",
+    "product": {
+      "name": "First Edition Hemingway 'The Sun Also Rises'",
+      "category": "collectibles",
+      "description": "1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.",
+      "market_price": 3430,
+      "haggle_norm": "high",
+      "typical_discount_pct": 15
+    },
+    "valuations": {
+      "buyer_true_value": 2340,
+      "seller_reserve_price": 2010,
+      "market_price": 3430,
+      "zopa": [
+        2010,
+        2340
+      ],
+      "zopa_width": 330,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 1700
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: First Edition Hemingway 'The Sun Also Rises'\nDESCRIPTION: 1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $2340.\n- You believe the fair market value is around $3430.\n- If you pay less than $2340, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $2340.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: First Edition Hemingway 'The Sun Also Rises'\nDESCRIPTION: 1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $2010.\n- You know the fair market value is around $3430.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $2010.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "494d496d-c7b7-4bb9-8778-3c03c7fb89f0",
     "product": {
       "name": "Vintage 1965 Vespa GS 160",
       "category": "vehicles",
       "description": "Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.",
-      "market_price": 6930,
+      "market_price": 6950,
       "haggle_norm": "high",
       "typical_discount_pct": 20
     },
     "valuations": {
-      "buyer_true_value": 5310,
-      "seller_reserve_price": 4910,
-      "market_price": 6930,
+      "buyer_true_value": 5710,
+      "seller_reserve_price": 3610,
+      "market_price": 6950,
       "zopa": [
-        4910,
-        5310
+        3610,
+        5710
       ],
-      "zopa_width": 400,
+      "zopa_width": 2100,
       "deal_possible": true,
-      "difficulty": "hard",
-      "suggested_buyer_anchor": 3650
+      "difficulty": "easy",
+      "suggested_buyer_anchor": 3450
     },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $5310.\n- You believe the fair market value is around $6930.\n- If you pay less than $5310, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $5310.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $4910.\n- You know the fair market value is around $6930.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $4910.",
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $5710.\n- You believe the fair market value is around $6950.\n- If you pay less than $5710, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $5710.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $3610.\n- You know the fair market value is around $6950.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $3610.",
     "information_asymmetry": {
       "seller_context": "full",
       "buyer_context": "sparse"
@@ -204,7 +105,275 @@
     }
   },
   {
-    "episode_id": "265c2695-79f2-4614-89f1-1f5b1449b717",
+    "episode_id": "3fa4fa6c-1038-4a2c-997a-c7695d7d275b",
+    "product": {
+      "name": "1952 Topps Mickey Mantle Baseball Card",
+      "category": "collectibles",
+      "description": "Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.",
+      "market_price": 5110,
+      "haggle_norm": "high",
+      "typical_discount_pct": 10
+    },
+    "valuations": {
+      "buyer_true_value": 3120,
+      "seller_reserve_price": 3420,
+      "market_price": 5110,
+      "zopa": null,
+      "zopa_width": 0,
+      "deal_possible": false,
+      "difficulty": "no_deal",
+      "suggested_buyer_anchor": 1950
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $3120.\n- You believe the fair market value is around $5110.\n- If you pay less than $3120, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $3120.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $3420.\n- You know the fair market value is around $5110.\n- You have sold many items like this. Typical buyers discount by 10%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $3420.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "32d6367a-8141-47f8-bd3d-c200b6e072e6",
+    "product": {
+      "name": "Vintage 1965 Vespa GS 160",
+      "category": "vehicles",
+      "description": "Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.",
+      "market_price": 6130,
+      "haggle_norm": "high",
+      "typical_discount_pct": 20
+    },
+    "valuations": {
+      "buyer_true_value": 4440,
+      "seller_reserve_price": 4390,
+      "market_price": 6130,
+      "zopa": [
+        4390,
+        4440
+      ],
+      "zopa_width": 50,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 3090
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $4440.\n- You believe the fair market value is around $6130.\n- If you pay less than $4440, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $4440.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $4390.\n- You know the fair market value is around $6130.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $4390.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "cd38f51a-7bce-449f-956e-d5157e8179e5",
+    "product": {
+      "name": "Vintage 1965 Vespa GS 160",
+      "category": "vehicles",
+      "description": "Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.",
+      "market_price": 6370,
+      "haggle_norm": "high",
+      "typical_discount_pct": 20
+    },
+    "valuations": {
+      "buyer_true_value": 3650,
+      "seller_reserve_price": 4610,
+      "market_price": 6370,
+      "zopa": null,
+      "zopa_width": 0,
+      "deal_possible": false,
+      "difficulty": "no_deal",
+      "suggested_buyer_anchor": 2500
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $3650.\n- You believe the fair market value is around $6370.\n- If you pay less than $3650, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $3650.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $4610.\n- You know the fair market value is around $6370.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $4610.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "82535e05-d63b-4306-bff3-0ee08fd16755",
+    "product": {
+      "name": "Lithograph by Bernard Buffet",
+      "category": "art",
+      "description": "Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.",
+      "market_price": 2570,
+      "haggle_norm": "high",
+      "typical_discount_pct": 25
+    },
+    "valuations": {
+      "buyer_true_value": 1460,
+      "seller_reserve_price": 1240,
+      "market_price": 2570,
+      "zopa": [
+        1240,
+        1460
+      ],
+      "zopa_width": 220,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 1010
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1460.\n- You believe the fair market value is around $2570.\n- If you pay less than $1460, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1460.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1240.\n- You know the fair market value is around $2570.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1240.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "3c6134b6-be0a-4ec3-8698-efca60097155",
+    "product": {
+      "name": "Vintage Sennheiser HD 414 Headphones",
+      "category": "electronics",
+      "description": "1970s open-back headphones. Foam pads replaced, cable intact. Classic hi-fi sound.",
+      "market_price": 230,
+      "haggle_norm": "medium",
+      "typical_discount_pct": 15
+    },
+    "valuations": {
+      "buyer_true_value": 180,
+      "seller_reserve_price": 160,
+      "market_price": 230,
+      "zopa": [
+        160,
+        180
+      ],
+      "zopa_width": 20,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 120
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage Sennheiser HD 414 Headphones\nDESCRIPTION: 1970s open-back headphones. Foam pads replaced, cable intact. Classic hi-fi sound.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $180.\n- You believe the fair market value is around $230.\n- If you pay less than $180, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $180.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage Sennheiser HD 414 Headphones\nDESCRIPTION: 1970s open-back headphones. Foam pads replaced, cable intact. Classic hi-fi sound.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $160.\n- You know the fair market value is around $230.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $160.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "a79ef50d-0fac-4526-888d-42e86ae8d774",
+    "product": {
+      "name": "Victorian Mahogany Writing Desk",
+      "category": "antiques",
+      "description": "Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.",
+      "market_price": 860,
+      "haggle_norm": "high",
+      "typical_discount_pct": 25
+    },
+    "valuations": {
+      "buyer_true_value": 690,
+      "seller_reserve_price": 570,
+      "market_price": 860,
+      "zopa": [
+        570,
+        690
+      ],
+      "zopa_width": 120,
+      "deal_possible": true,
+      "difficulty": "medium",
+      "suggested_buyer_anchor": 460
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $690.\n- You believe the fair market value is around $860.\n- If you pay less than $690, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $690.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $570.\n- You know the fair market value is around $860.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou know this piece's provenance, comparable auction results, and restoration costs. You're aware that serious collectors pay premium prices and that scarcity drives value in this category.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $570.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "c99d82fd-230b-455b-9938-f31644d4b143",
+    "product": {
+      "name": "Vintage Leica M3 Film Camera",
+      "category": "electronics",
+      "description": "1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.",
+      "market_price": 1150,
+      "haggle_norm": "medium",
+      "typical_discount_pct": 15
+    },
+    "valuations": {
+      "buyer_true_value": 850,
+      "seller_reserve_price": 850,
+      "market_price": 1150,
+      "zopa": null,
+      "zopa_width": 0,
+      "deal_possible": false,
+      "difficulty": "no_deal",
+      "suggested_buyer_anchor": 560
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $850.\n- You believe the fair market value is around $1150.\n- If you pay less than $850, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $850.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $850.\n- You know the fair market value is around $1150.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $850.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "f62e354d-f461-431d-9f5f-7d08c2a98892",
+    "product": {
+      "name": "Pioneer SX-1250 Stereo Receiver",
+      "category": "electronics",
+      "description": "1976 flagship receiver, 160W per channel. Recently serviced, all functions working.",
+      "market_price": 1740,
+      "haggle_norm": "medium",
+      "typical_discount_pct": 20
+    },
+    "valuations": {
+      "buyer_true_value": 1050,
+      "seller_reserve_price": 1280,
+      "market_price": 1740,
+      "zopa": null,
+      "zopa_width": 0,
+      "deal_possible": false,
+      "difficulty": "no_deal",
+      "suggested_buyer_anchor": 680
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Pioneer SX-1250 Stereo Receiver\nDESCRIPTION: 1976 flagship receiver, 160W per channel. Recently serviced, all functions working.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1050.\n- You believe the fair market value is around $1740.\n- If you pay less than $1050, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1050.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Pioneer SX-1250 Stereo Receiver\nDESCRIPTION: 1976 flagship receiver, 160W per channel. Recently serviced, all functions working.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1280.\n- You know the fair market value is around $1740.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1280.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "2675fc47-6de9-4059-b8cc-0911a9739ab0",
     "product": {
       "name": "Victorian Mahogany Writing Desk",
       "category": "antiques",
@@ -239,100 +408,275 @@
     }
   },
   {
-    "episode_id": "8bc9f265-73f2-4867-92b9-7c447e1445e0",
-    "product": {
-      "name": "Oil Painting \u2014 French Countryside (1940s)",
-      "category": "art",
-      "description": "Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.",
-      "market_price": 1640,
-      "haggle_norm": "high",
-      "typical_discount_pct": 30
-    },
-    "valuations": {
-      "buyer_true_value": 1030,
-      "seller_reserve_price": 880,
-      "market_price": 1640,
-      "zopa": [
-        880,
-        1030
-      ],
-      "zopa_width": 150,
-      "deal_possible": true,
-      "difficulty": "hard",
-      "suggested_buyer_anchor": 630
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1030.\n- You believe the fair market value is around $1640.\n- If you pay less than $1030, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1030.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Oil Painting \u2014 French Countryside (1940s)\nDESCRIPTION: Unsigned impressionist landscape, 24x36 inches. Oil on canvas, original gilt frame. Minor craquelure.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $880.\n- You know the fair market value is around $1640.\n- You have sold many items like this. Typical buyers discount by 30%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $880.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "e9bdc28b-1f69-4b34-83ef-13d4eb8ea88b",
-    "product": {
-      "name": "1952 Topps Mickey Mantle Baseball Card",
-      "category": "collectibles",
-      "description": "Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.",
-      "market_price": 4880,
-      "haggle_norm": "high",
-      "typical_discount_pct": 10
-    },
-    "valuations": {
-      "buyer_true_value": 3300,
-      "seller_reserve_price": 2700,
-      "market_price": 4880,
-      "zopa": [
-        2700,
-        3300
-      ],
-      "zopa_width": 600,
-      "deal_possible": true,
-      "difficulty": "medium",
-      "suggested_buyer_anchor": 2110
-    },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $3300.\n- You believe the fair market value is around $4880.\n- If you pay less than $3300, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $3300.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $2700.\n- You know the fair market value is around $4880.\n- You have sold many items like this. Typical buyers discount by 10%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $2700.",
-    "information_asymmetry": {
-      "seller_context": "full",
-      "buyer_context": "sparse"
-    },
-    "metadata": {
-      "max_turns": 10,
-      "currency": "USD",
-      "generator_version": "1.1-template"
-    }
-  },
-  {
-    "episode_id": "7a374b95-8b88-45f3-8387-794e0ecf3180",
+    "episode_id": "ad361b77-cd9c-47ee-98f0-e3b858b23ac5",
     "product": {
       "name": "Vintage Leica M3 Film Camera",
       "category": "electronics",
       "description": "1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.",
-      "market_price": 1110,
+      "market_price": 1070,
       "haggle_norm": "medium",
       "typical_discount_pct": 15
     },
     "valuations": {
-      "buyer_true_value": 890,
-      "seller_reserve_price": 730,
-      "market_price": 1110,
+      "buyer_true_value": 720,
+      "seller_reserve_price": 590,
+      "market_price": 1070,
       "zopa": [
-        730,
-        890
+        590,
+        720
+      ],
+      "zopa_width": 130,
+      "deal_possible": true,
+      "difficulty": "medium",
+      "suggested_buyer_anchor": 460
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $720.\n- You believe the fair market value is around $1070.\n- If you pay less than $720, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $720.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $590.\n- You know the fair market value is around $1070.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $590.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "d66007f0-b1f8-429d-982a-4dd7c84ddbf6",
+    "product": {
+      "name": "First Edition Hemingway 'The Sun Also Rises'",
+      "category": "collectibles",
+      "description": "1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.",
+      "market_price": 3120,
+      "haggle_norm": "high",
+      "typical_discount_pct": 15
+    },
+    "valuations": {
+      "buyer_true_value": 1940,
+      "seller_reserve_price": 1650,
+      "market_price": 3120,
+      "zopa": [
+        1650,
+        1940
+      ],
+      "zopa_width": 290,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 1440
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: First Edition Hemingway 'The Sun Also Rises'\nDESCRIPTION: 1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1940.\n- You believe the fair market value is around $3120.\n- If you pay less than $1940, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1940.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: First Edition Hemingway 'The Sun Also Rises'\nDESCRIPTION: 1926 first printing, dust jacket present but torn. Boards tight, foxing on endpapers.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1650.\n- You know the fair market value is around $3120.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1650.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "7c9333dd-eb79-4cf1-bc2e-4218304f6898",
+    "product": {
+      "name": "Vintage 1965 Vespa GS 160",
+      "category": "vehicles",
+      "description": "Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.",
+      "market_price": 6200,
+      "haggle_norm": "high",
+      "typical_discount_pct": 20
+    },
+    "valuations": {
+      "buyer_true_value": 5420,
+      "seller_reserve_price": 4070,
+      "market_price": 6200,
+      "zopa": [
+        4070,
+        5420
+      ],
+      "zopa_width": 1350,
+      "deal_possible": true,
+      "difficulty": "medium",
+      "suggested_buyer_anchor": 3430
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $5420.\n- You believe the fair market value is around $6200.\n- If you pay less than $5420, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $5420.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage 1965 Vespa GS 160\nDESCRIPTION: Italian scooter, fully restored 4 years ago. Repainted in original grey. Runs well.\nCATEGORY: vehicles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $4070.\n- You know the fair market value is around $6200.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know the vehicle history, recent mechanic inspection results, and comparable listings. You understand that emotional attachment and rarity can push prices above book value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $4070.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "53d00f83-79e8-415c-ad0e-61444f024edd",
+    "product": {
+      "name": "Lithograph by Bernard Buffet",
+      "category": "art",
+      "description": "Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.",
+      "market_price": 2850,
+      "haggle_norm": "high",
+      "typical_discount_pct": 25
+    },
+    "valuations": {
+      "buyer_true_value": 1950,
+      "seller_reserve_price": 1790,
+      "market_price": 2850,
+      "zopa": [
+        1790,
+        1950
       ],
       "zopa_width": 160,
       "deal_possible": true,
-      "difficulty": "medium",
-      "suggested_buyer_anchor": 590
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 1310
     },
-    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $890.\n- You believe the fair market value is around $1110.\n- If you pay less than $890, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $890.",
-    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Vintage Leica M3 Film Camera\nDESCRIPTION: 1957 rangefinder camera, original leather case. Shutter fires correctly, minor cosmetic wear.\nCATEGORY: electronics\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $730.\n- You know the fair market value is around $1110.\n- You have sold many items like this. Typical buyers discount by 15%.\n\nYOUR EXPERTISE:\nYou know the current eBay sold listings, what refurbishment cost, and that vintage electronics buyers are often enthusiasts willing to pay for authenticity and working condition.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $730.",
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1950.\n- You believe the fair market value is around $2850.\n- If you pay less than $1950, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1950.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1790.\n- You know the fair market value is around $2850.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1790.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "9ed10569-4b32-4bfa-9003-7ac0ad0c3d5e",
+    "product": {
+      "name": "Edwardian Silver Tea Set",
+      "category": "antiques",
+      "description": "5-piece sterling silver set, hallmarked 1908. Teapot, sugar, creamer, tray, tongs. Light tarnish.",
+      "market_price": 1630,
+      "haggle_norm": "high",
+      "typical_discount_pct": 20
+    },
+    "valuations": {
+      "buyer_true_value": 1360,
+      "seller_reserve_price": 740,
+      "market_price": 1630,
+      "zopa": [
+        740,
+        1360
+      ],
+      "zopa_width": 620,
+      "deal_possible": true,
+      "difficulty": "easy",
+      "suggested_buyer_anchor": 980
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Edwardian Silver Tea Set\nDESCRIPTION: 5-piece sterling silver set, hallmarked 1908. Teapot, sugar, creamer, tray, tongs. Light tarnish.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $1360.\n- You believe the fair market value is around $1630.\n- If you pay less than $1360, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $1360.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Edwardian Silver Tea Set\nDESCRIPTION: 5-piece sterling silver set, hallmarked 1908. Teapot, sugar, creamer, tray, tongs. Light tarnish.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $740.\n- You know the fair market value is around $1630.\n- You have sold many items like this. Typical buyers discount by 20%.\n\nYOUR EXPERTISE:\nYou know this piece's provenance, comparable auction results, and restoration costs. You're aware that serious collectors pay premium prices and that scarcity drives value in this category.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $740.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "93d36be4-9ca5-4f1c-9126-4b2924917ae2",
+    "product": {
+      "name": "Victorian Mahogany Writing Desk",
+      "category": "antiques",
+      "description": "Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.",
+      "market_price": 770,
+      "haggle_norm": "high",
+      "typical_discount_pct": 25
+    },
+    "valuations": {
+      "buyer_true_value": 500,
+      "seller_reserve_price": 400,
+      "market_price": 770,
+      "zopa": [
+        400,
+        500
+      ],
+      "zopa_width": 100,
+      "deal_possible": true,
+      "difficulty": "medium",
+      "suggested_buyer_anchor": 360
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $500.\n- You believe the fair market value is around $770.\n- If you pay less than $500, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $500.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Victorian Mahogany Writing Desk\nDESCRIPTION: Late 1800s writing desk with brass hardware and original felt lining. Minor scratches on surface.\nCATEGORY: antiques\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $400.\n- You know the fair market value is around $770.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou know this piece's provenance, comparable auction results, and restoration costs. You're aware that serious collectors pay premium prices and that scarcity drives value in this category.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $400.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "07032130-e709-489d-a325-4f70b535c72c",
+    "product": {
+      "name": "Lithograph by Bernard Buffet",
+      "category": "art",
+      "description": "Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.",
+      "market_price": 3020,
+      "haggle_norm": "high",
+      "typical_discount_pct": 25
+    },
+    "valuations": {
+      "buyer_true_value": 2080,
+      "seller_reserve_price": 1560,
+      "market_price": 3020,
+      "zopa": [
+        1560,
+        2080
+      ],
+      "zopa_width": 520,
+      "deal_possible": true,
+      "difficulty": "medium",
+      "suggested_buyer_anchor": 1560
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $2080.\n- You believe the fair market value is around $3020.\n- If you pay less than $2080, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $2080.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: Lithograph by Bernard Buffet\nDESCRIPTION: Signed and numbered 42/150. Clown series, 1967. Some yellowing on margins, unframed.\nCATEGORY: art\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $1560.\n- You know the fair market value is around $3020.\n- You have sold many items like this. Typical buyers discount by 25%.\n\nYOUR EXPERTISE:\nYou understand attribution, period, technique, and comparable auction results. You know how to frame artistic merit and investment potential for buyers.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $1560.",
+    "information_asymmetry": {
+      "seller_context": "full",
+      "buyer_context": "sparse"
+    },
+    "metadata": {
+      "max_turns": 10,
+      "currency": "USD",
+      "generator_version": "1.1-template"
+    }
+  },
+  {
+    "episode_id": "aea3c30c-5ef9-4587-83f4-0afa61219670",
+    "product": {
+      "name": "1952 Topps Mickey Mantle Baseball Card",
+      "category": "collectibles",
+      "description": "Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.",
+      "market_price": 4550,
+      "haggle_norm": "high",
+      "typical_discount_pct": 10
+    },
+    "valuations": {
+      "buyer_true_value": 2870,
+      "seller_reserve_price": 2440,
+      "market_price": 4550,
+      "zopa": [
+        2440,
+        2870
+      ],
+      "zopa_width": 430,
+      "deal_possible": true,
+      "difficulty": "hard",
+      "suggested_buyer_anchor": 1760
+    },
+    "buyer_prompt": "You are negotiating to BUY the following item from a private seller.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- The maximum you are willing to pay is $2870.\n- You believe the fair market value is around $4550.\n- If you pay less than $2870, you make a profit. The lower the price, the better.\n\nYOUR GOAL:\nNegotiate the lowest possible price. Be strategic \u2014 use anchoring, express hesitation,\nhighlight flaws, and make incremental concessions. Do not accept the first offer.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 make or counter with a specific dollar offer\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away from the negotiation\n- You may include reasoning before your action tag.\n- Never reveal your true maximum value of $2870.",
+    "seller_prompt": "You are an expert dealer negotiating to SELL the following item.\n\nITEM: 1952 Topps Mickey Mantle Baseball Card\nDESCRIPTION: Graded PSA 3 (VG). Iconic rookie-era card. Light crease on corner, centered well.\nCATEGORY: collectibles\n\nYOUR PRIVATE INFORMATION (never reveal this):\n- Your absolute minimum (reserve price) is $2440.\n- You know the fair market value is around $4550.\n- You have sold many items like this. Typical buyers discount by 10%.\n\nYOUR EXPERTISE:\nYou understand grading standards, recent comparable sales, and that provenance documentation significantly affects price. You know how to highlight scarcity and investment value.\n\nYOUR GOAL:\nSell for as high a price as possible, ideally close to market value.\nUse anchoring high, emphasize provenance and quality, create mild urgency,\nand make small strategic concessions to appear reasonable.\n\nRULES:\n- You MUST respond with one of these actions:\n  <action>OFFER $X</action>  \u2014 state your asking or counter price\n  <action>ACCEPT</action>    \u2014 accept the current offer on the table\n  <action>WALK</action>      \u2014 walk away if offer is below your reserve\n- You may include reasoning / sales pitch before your action tag.\n- Never reveal your reserve price of $2440.",
     "information_asymmetry": {
       "seller_context": "full",
       "buyer_context": "sparse"

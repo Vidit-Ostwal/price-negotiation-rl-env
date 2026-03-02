@@ -1,147 +1,101 @@
 # buyer-seller
 
-Multi-turn negotiation environment built on `verifiers.MultiTurnEnv`.
+Multi-turn buyer/seller negotiation environment for `verifiers`.
 
-The buyer is the policy model that `verifiers` evaluates/trains.  
-The seller is the environment-side opponent called inside `env_response()` with LiteLLM.
+- Buyer: policy model selected by `vf-eval -m ...`
+- Seller: fixed opponent called inside the environment via LiteLLM
 
-## Overview
+## Repository Layout
 
-- Environment ID: `buyer_seller`
-- Task type: multi-turn negotiation
-- Domain: buyer/seller price bargaining with hidden private values
-- Core objective: maximize buyer-side utility while following strict action formatting
-
-## How The Environment Works
-
-At a high level:
-
-1. `verifiers` asks the buyer model for a response each turn.
-2. `NegotiationEnv.env_response()` receives the conversation, parses the buyer action, and updates state.
-3. If the negotiation is not terminal, the environment calls the seller model (fixed opponent).
-4. Seller response is parsed and state is updated.
-5. Loop continues until max turns, deal, or walk-away.
-6. Rubric reward functions score the final trajectory.
-
-### Turn Protocol
-
-Both buyer and seller are expected to include one valid action tag in text:
-
-- `<action>OFFER $1234</action>`
-- `<action>ACCEPT</action>`
-- `<action>WALK</action>`
-
-If buyer formatting is invalid, `invalid_turns` is incremented and `format_reward` penalizes quality.
-
-## Buyer vs Seller Roles
-
-- Buyer model:
-  - Chosen by `vf-eval -m <buyer_model>`
-  - Called by `verifiers` rollout loop (`get_model_response`)
-  - This is the policy being optimized/evaluated
-- Seller model:
-  - Chosen by `SELLER_MODEL` environment variable
-  - Called inside `buyer_seller.py` `env_response()`
-  - Treated as fixed environment behavior
+- `buyer_seller.py`: `NegotiationEnv` + `load_environment()` entrypoint
+- `utils.py`: `.env` loading, env validation, dataset loading, role-flip helper
+- `rewards.py`: action parser + 7 reward functions
+- `generate_dataset.py`: synthetic dataset generator
+- `dataset.json`: sample dataset (10 episodes)
+- `test_seller_model_smoke.py`: real seller API smoke test (no mocks)
+- `understanding_dataset.md`: field-by-field dataset schema notes
 
 ## Configuration
 
-This environment reads configuration from environment variables (via `utils._validate_env()`).
-It also auto-loads a root `.env` file if present.
+The environment uses `utils._validate_env()` and auto-loads `.env` from repo root.
 
-Quick setup:
+Required:
+
+- `OPENAI_API_KEY`
+- `SELLER_MODEL`
+- `OPENAI_API_BASE`
+- `DATASET_PATH`
+
+Optional:
+
+- `MAX_TURNS` (default `10`)
+
+Example `.env`:
 
 ```bash
-cp .env.example .env
-# then edit .env with your real API key/model values
+OPENAI_API_KEY=sk-...
+SELLER_MODEL=openai/gpt-4.1-mini
+OPENAI_API_BASE=https://api.openai.com/v1
+DATASET_PATH=dataset.json
+MAX_TURNS=10
 ```
 
-| Variable | Required | Example | Used for |
-| --- | --- | --- | --- |
-| `OPENAI_API_KEY` | Yes | `sk-...` | Seller API call auth (and `run_rollout.py` buyer/seller calls) |
-| `OPENAI_API_BASE` | Yes | `https://api.openai.com/v1` | OpenAI-compatible endpoint base for LiteLLM |
-| `SELLER_MODEL` | Yes | `openai/gpt-4.1-mini` | Seller model ID used in environment turn responses |
-| `DATASET_PATH` | Yes | `dataset.json` | Episode dataset path |
-| `MAX_TURNS` | No | `10` | Max negotiation turns (default: `10`) |
+## Runtime Flow
 
-## Dataset Format
+1. `load_environment()` validates env vars and loads dataset.
+2. Buyer sends an action (`<action>OFFER $X</action>`, `ACCEPT`, or `WALK`).
+3. Env parses buyer action and updates state.
+4. Env calls seller model via `litellm.acompletion(...)`.
+5. Seller action is parsed and applied.
+6. Episode ends on max turns, deal, or walk-away.
 
-`DATASET_PATH` should point to a JSON list of episodes. Each episode is expected to include:
+Important seller safety rules enforced in code:
 
-- `buyer_prompt` (str): system prompt shown to buyer model
-- `seller_prompt` (str): system prompt used for seller model call
-- `valuations` (dict), including:
-  - `buyer_true_value`
-  - `seller_reserve_price`
-  - `zopa_width`
-  - `deal_possible`
-- Additional metadata fields are preserved in `info`
-
-At load time, dataset rows are converted to:
-
-- `prompt`: `[{"role": "system", "content": buyer_prompt}]` (chat format)
-- `info`: full episode object
-
-## State Fields
-
-Per-episode state is initialized in `setup_state()` using `_init_state(...)`:
-
-- `buyer_prompt`, `seller_prompt`
-- `buyer_true_value`, `seller_reserve`, `zopa_width`, `deal_possible`
-- `current_offer`, `offer_history`, `turn`
-- `deal_reached`, `final_price`, `walked_away`, `who_walked`
-- `invalid_turns`
-
-These are mutated in-place during `env_response()`.
+- Seller cannot accept below `seller_reserve_price`.
+- Seller cannot offer below `seller_reserve_price` (offer is clamped).
+- Seller API failures trigger fallback response and are recorded in `state["seller_errors"]`.
 
 ## Rewards
 
-Defined in `rewards.py` and combined with equal weights in a rubric:
+Equal-weight rubric with 7 rewards:
 
-1. `surplus_reward`
-- Buyer surplus on successful deals:
-  - hard `-1.0` if a deal closes above `buyer_true_value`
-  - otherwise `(buyer_true_value - final_price) / zopa_width` clamped to `[-1, 1]`
-  - returns `0.0` if no deal
+- `surplus_reward`
+- `walkaway_penalty`
+- `format_reward`
+- `efficiency_bonus`
+- `anchoring_reward`
+- `no_reveal_penalty`
+- `concession_rate_penalty`
 
-2. `walkaway_penalty`
-- If no deal:
-  - `-0.5` when a deal was possible
-  - `+0.2` when no deal was possible
-- returns `0.0` when deal reached
+See `rewards.py` for exact formulas.
 
-3. `format_reward`
-- Fraction of buyer turns with valid action tags, scaled by `0.2`
-- max contribution `0.2`
+## Run Commands
 
-4. `efficiency_bonus`
-- Faster successful closures get higher bonus:
-  - `((max_turns - turns_used) / max_turns) * 0.1`
-- max contribution `0.1`
+### 1) Seller Smoke Test (real API call)
 
-5. `anchoring_reward`
-- Uses hidden `suggested_buyer_anchor` from episode info:
-  - opening below anchor: `+0.3`
-  - opening at anchor: `+0.15`
-  - opening above anchor: `-0.2`
+```bash
+uv run python -m unittest -q test_seller_model_smoke.py
+```
 
-6. `no_reveal_penalty`
-- Penalizes revealing buyer ceiling too early:
-  - any buyer offer >= 90% of `buyer_true_value` -> `-0.3`
+Verbose:
 
-7. `concession_rate_penalty`
-- Penalizes overly fast upward concessions:
-  - if average concession pace is too high, penalty up to `-0.3`
+```bash
+uv run python -m unittest -v test_seller_model_smoke.py
+```
 
-## Running With `vf-eval`
+If `uv` cache permissions fail:
 
-Example:
+```bash
+UV_CACHE_DIR=.uv-cache uv run python -m unittest -q test_seller_model_smoke.py
+```
+
+### 2) Evaluate Buyer with Verifiers
 
 ```bash
 uv run vf-eval buyer_seller -m openai/gpt-4.1-mini -n 5 -r 1
 ```
 
-Prime Inference-style call:
+Prime Inference style:
 
 ```bash
 uv run vf-eval buyer_seller \
@@ -151,38 +105,17 @@ uv run vf-eval buyer_seller \
   -n 1 -r 1 -s
 ```
 
-What happens:
-
-- `-m` sets the buyer model used by verifiers rollout.
-- `SELLER_MODEL` sets the fixed seller model called by the environment.
-- `-k`/`-b` configure the buyer-side inference endpoint for `vf-eval`.
-
-## Local Rollout Validation Script
-
-`run_rollout.py` is a standalone validator that calls both buyer and seller via LiteLLM (outside the verifiers training loop).
-
-Run:
+### 3) Generate Dataset
 
 ```bash
-uv run run_rollout.py --episodes 5 --concurrency 2 --verbose
+uv run python generate_dataset.py --n 100 --output dataset.json --seed 42
 ```
 
-Output:
+Note: `--balanced` is enabled by default in the script.
 
-- Per-episode transcript and actions
-- Reward breakdown (`surplus`, `walkaway`, `format`, `efficiency`, `total`)
-- Aggregated summary
-- JSON dump to `rollout_results.json` by default
+## Current Sample Dataset (`dataset.json`)
 
-## Module Structure
-
-- `buyer_seller.py`: environment class and `load_environment()`
-- `rewards.py`: action parser + reward functions
-- `utils.py`: env var validation, dataset loader, seller-message role conversion
-- `run_rollout.py`: standalone two-model rollout checker
-- `generate_dataset.py`: dataset generation utility
-
-## Known Constraints
-
-- Seller API fallback behavior on errors is a hard-coded counter-offer strategy.
-- Environment assumes episodes contain expected valuation keys.
+- Episodes: `10`
+- Categories: balanced (`2` each across 5 categories)
+- Difficulties: `easy/medium/hard/no_deal` mix
+- Generator version: `1.1-template`
