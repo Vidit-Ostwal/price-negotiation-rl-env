@@ -226,12 +226,14 @@ name = "buyer-seller"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "datasets" },
     { name = "litellm" },
     { name = "verifiers" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "datasets", specifier = ">=4.0.0" },
     { name = "litellm", specifier = ">=1.82.0" },
     { name = "verifiers", specifier = ">=0.1.10" },
 ]

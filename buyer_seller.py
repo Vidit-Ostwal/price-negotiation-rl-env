@@ -6,7 +6,6 @@ Seller (strong, fixed)   — called via litellm inside env_response()
 
 Required env vars:
     OPENAI_API_KEY      — API key for seller model
-    BUYER_MODEL         — e.g. "gpt-4o-mini"
     SELLER_MODEL        — e.g. "gpt-4o"
     OPENAI_API_BASE     — e.g. "https://api.openai.com/v1"
     DATASET_PATH        — path to dataset.json

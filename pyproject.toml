@@ -1,10 +1,11 @@
 [project]
 name = "buyer-seller"
-description = "Your environment description here"
-tags = ["placeholder-tag", "train", "eval"]
+description = "Multi-turn buyer-seller negotiation environment for verifiers."
+tags = ["negotiation", "rl", "train", "eval"]
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
+    "datasets>=4.0.0",
     "litellm>=1.82.0",
     "verifiers>=0.1.10",
 ]
@@ -14,7 +15,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["buyer_seller.py", "pyproject.toml"] 
+include = ["buyer_seller.py", "rewards.py", "utils.py", "pyproject.toml"]
 
 [tool.verifiers.eval]
 num_examples = 5

@@ -47,6 +47,14 @@ If buyer formatting is invalid, `invalid_turns` is incremented and `format_rewar
 ## Configuration
 
 This environment reads configuration from environment variables (via `utils._validate_env()`).
+It also auto-loads a root `.env` file if present.
+
+Quick setup:
+
+```bash
+cp .env.example .env
+# then edit .env with your real API key/model values
+```
 
 | Variable | Required | Example | Used for |
 | --- | --- | --- | --- |
@@ -54,13 +62,7 @@ This environment reads configuration from environment variables (via `utils._val
 | `OPENAI_API_BASE` | Yes | `https://api.openai.com/v1` | OpenAI-compatible endpoint base for LiteLLM |
 | `SELLER_MODEL` | Yes | `openai/gpt-4.1-mini` | Seller model ID used in environment turn responses |
 | `DATASET_PATH` | Yes | `dataset.json` | Episode dataset path |
-| `BUYER_MODEL` | Yes (current validator) | `openai/gpt-4.1-mini` | Used by `run_rollout.py` (not used directly by `vf-eval` buyer call) |
 | `MAX_TURNS` | No | `10` | Max negotiation turns (default: `10`) |
-
-### Important Note About `BUYER_MODEL`
-
-For `vf-eval`, buyer model selection comes from the CLI `-m` flag.  
-However, current env validation still requires `BUYER_MODEL` to be set because the same validator is shared with `run_rollout.py`.
 
 ## Dataset Format
 
@@ -136,13 +138,6 @@ Defined in `rewards.py` and combined with equal weights in a rubric:
 Example:
 
 ```bash
-export OPENAI_API_KEY=sk-...
-export OPENAI_API_BASE=https://api.openai.com/v1
-export BUYER_MODEL=openai/gpt-4.1-mini
-export SELLER_MODEL=openai/gpt-4.1-mini
-export DATASET_PATH=dataset.json
-export MAX_TURNS=10
-
 uv run vf-eval buyer_seller -m openai/gpt-4.1-mini -n 5 -r 1
 ```
 
@@ -189,6 +184,5 @@ Output:
 
 ## Known Constraints
 
-- Current `_validate_env()` requires `BUYER_MODEL` even for pure `vf-eval` flow.
 - Seller API fallback behavior on errors is a hard-coded counter-offer strategy.
 - Environment assumes episodes contain expected valuation keys.

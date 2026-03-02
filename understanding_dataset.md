@@ -41,8 +41,8 @@ The core financial structure of the episode. This is the ground truth that neith
 
 | Field | Type | Description |
 |---|---|---|
-| `buyer_true_value` | integer (USD) | The maximum the buyer is secretly willing to pay. Sampled at 70–110% of market price. The buyer's reward at the end of the episode is `buyer_true_value − deal_price`. Never revealed to the seller. |
-| `seller_reserve_price` | integer (USD) | The minimum the seller will accept before walking away. Sampled at 50–85% of market price. Any deal below this is a loss for the seller. Never revealed to the buyer. |
+| `buyer_true_value` | integer (USD) | The maximum the buyer is secretly willing to pay. Sampled at 55–90% of market price so buyer valuations stay realistically below market. Never revealed to the seller. |
+| `seller_reserve_price` | integer (USD) | The minimum the seller will accept before walking away. Sampled at 45–75% of market price. Never revealed to the buyer. |
 | `market_price` | integer (USD) | The fair market value (with small random noise applied per episode). Both agents are told this approximate value in their prompts. |
 | `zopa` | [int, int] or null | **Zone of Possible Agreement.** The range `[seller_reserve, buyer_true_value]` within which a deal is mutually beneficial. If `null`, no deal is possible — the seller's reserve exceeds the buyer's value. |
 | `zopa_width` | integer (USD) | The dollar width of the ZOPA (`buyer_true_value − seller_reserve`). Wider = more room to negotiate. Zero or negative means no deal is possible. |
@@ -106,24 +106,23 @@ Episode-level configuration used by the `NegotiationEnv` at runtime.
 |---|---|---|
 | `max_turns` | integer | Maximum number of back-and-forth turns before the episode is force-terminated with no deal. Default: 10. |
 | `currency` | string | Currency used for all prices. Always `"USD"` in v1.0. |
-| `generator_version` | string | Version tag for the generator that produced this episode. `"1.0-template"` means template-based generation. Will be `"2.0-llm"` once LLM generation is added. Useful for filtering dataset versions during training. |
+| `generator_version` | string | Version tag for the generator that produced this episode. Current value is `"1.1-template"` (valuation-range fix). Useful for filtering dataset versions during training. |
 
 ---
 
-## Reward Formula (Reference)
+## Reward Signals (Current)
 
-The dataset defines the setup — rewards are computed at the end of each episode by the `NegotiationEnv`:
+The dataset defines the setup. Buyer rewards are computed at the end of each episode by `NegotiationEnv` via a weighted rubric:
 
-```
-buyer_reward  = (buyer_true_value − deal_price) / zopa_width   # normalized 0→1
-seller_reward = (deal_price − seller_reserve)   / zopa_width   # normalized 0→1
+- `surplus_reward`: if deal reached, `(buyer_true_value - final_price) / zopa_width` clamped to `[-1, 1]`; hard `-1.0` if buyer overpays above their true value.
+- `walkaway_penalty`: `-0.5` when no deal but `deal_possible=true`; `+0.2` when no deal and `deal_possible=false`.
+- `format_reward`: buyer action-tag compliance ratio scaled to max `0.2`.
+- `efficiency_bonus`: faster successful deals get up to `+0.1`.
+- `anchoring_reward`: opening below/equal/above `suggested_buyer_anchor` yields `+0.3` / `+0.15` / `-0.2`.
+- `no_reveal_penalty`: `-0.3` if any buyer offer reaches at least 90% of `buyer_true_value`.
+- `concession_rate_penalty`: penalizes large upward concession pace (up to `-0.3`).
 
-# If no deal reached when deal_possible = true:
-both_agents   = −0.5  # penalty for missing a mutually beneficial deal
-
-# If no deal reached when deal_possible = false:
-both_agents   = 0.0   # correct outcome, no penalty
-```
+All seven rewards are currently combined with equal weights in the environment rubric.
 
 ---
 
@@ -155,7 +154,7 @@ both_agents   = 0.0   # correct outcome, no penalty
   "metadata": {
     "max_turns": 10,
     "currency": "USD",
-    "generator_version": "1.0-template"
+    "generator_version": "1.1-template"
   }
 }
 ```

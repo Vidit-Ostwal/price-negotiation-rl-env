@@ -1,0 +1,8 @@
+2026-03-02 16:34:06 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Initializing ZMQEnvServer to serve buyer_seller (env_args={}, extra_env_kwargs={})
+2026-03-02 16:34:06 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Loading environment buyer_seller with env_args={}
+2026-03-02 16:34:06 - verifiers.utils.env_utils - INFO - Loading environment: buyer_seller
+2026-03-02 16:34:07 - verifiers.utils.env_utils - INFO - Successfully loaded environment 'buyer_seller'
+2026-03-02 16:34:07 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - ZMQEnvServer started on tcp://127.0.0.1:59823
+2026-03-02 16:34:28 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Received signal SIGTERM, initiating graceful shutdown
+2026-03-02 16:34:29 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Stop event received, shutting down gracefully
+2026-03-02 16:34:29 - verifiers.workers.server.env_server.ZMQEnvServer - INFO - Environment server shut down
