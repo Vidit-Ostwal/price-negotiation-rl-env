@@ -107,11 +107,27 @@ uv run vf-eval buyer_seller \
 
 ### 3) Generate Dataset
 
+Template mode (default):
+
 ```bash
-uv run python generators/generate_dataset.py --n 100 --output dataset.json --seed 42
+uv run python generators/generate_dataset.py --mode template --n 100 --output dataset.json --seed 42
 ```
 
-Note: `--balanced` is enabled by default in the script.
+LLM mode:
+
+```bash
+uv run python generators/generate_dataset.py --mode llm --n 100 --output dataset.json --seed 42
+```
+
+LLM mode env vars:
+
+- Required: `OPENAI_API_KEY`
+- Optional: `OPENAI_API_BASE` (default `https://api.openai.com/v1`)
+- Optional: `GENERATOR_MODEL` (default `gpt-4o-mini`)
+
+`generators/generate_dataset.py` auto-loads missing values from repo-root `.env` before validation.
+
+Note: category balancing is effectively enabled by default in current script behavior.
 
 ## Current Sample Dataset (`dataset.json`)
 
