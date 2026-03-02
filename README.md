@@ -10,10 +10,10 @@ Multi-turn buyer/seller negotiation environment for `verifiers`.
 - `buyer_seller.py`: `NegotiationEnv` + `load_environment()` entrypoint
 - `utils.py`: `.env` loading, env validation, dataset loading, role-flip helper
 - `rewards.py`: action parser + 7 reward functions
-- `generate_dataset.py`: synthetic dataset generator
+- `generators/generate_dataset.py`: synthetic dataset generator (template + LLM modes)
 - `dataset.json`: sample dataset (10 episodes)
 - `test_seller_model_smoke.py`: real seller API smoke test (no mocks)
-- `understanding_dataset.md`: field-by-field dataset schema notes
+- `generator.md`: dataset schema + generation guide
 
 ## Configuration
 
@@ -108,7 +108,7 @@ uv run vf-eval buyer_seller \
 ### 3) Generate Dataset
 
 ```bash
-uv run python generate_dataset.py --n 100 --output dataset.json --seed 42
+uv run python generators/generate_dataset.py --n 100 --output dataset.json --seed 42
 ```
 
 Note: `--balanced` is enabled by default in the script.
