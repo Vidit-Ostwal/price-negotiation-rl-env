@@ -8,10 +8,13 @@ Required env vars:
     OPENAI_API_KEY      — API key for seller model
     SELLER_MODEL        — e.g. "gpt-4o"
     OPENAI_API_BASE     — e.g. "https://api.openai.com/v1"
-    DATASET_PATH        — path to dataset.json
 
 Optional:
     MAX_TURNS           — default 10
+    HF_DATASET_REPO     — defaults to ViditOstwal/price-negotiation-datasets
+    HF_DATASET_SPLIT    — defaults to train
+    HF_TOKEN            — optional for private HF datasets
+    DATASET_PATH        — local fallback path (default dataset.json)
 
 Usage:
     from negotiation_env import load_environment
@@ -24,7 +27,7 @@ from litellm import acompletion
 from datasets import Dataset
 import verifiers as vf
 from verifiers.types import Messages, State
-from utils import _validate_env, _build_seller_messages, _load_hf_dataset
+from utils import _validate_env, _build_seller_messages, _load_env_dataset
 from rewards import (
     _parse_action,
     surplus_reward,
@@ -219,8 +222,13 @@ def load_environment() -> NegotiationEnv:
     """
     config = _validate_env()
 
-    dataset = _load_hf_dataset(config["dataset_path"])
-    logger.info(f"✅ Loaded {len(dataset)} episodes from {config['dataset_path']}")
+    dataset, dataset_source = _load_env_dataset(
+        dataset_path=config["dataset_path"],
+        hf_dataset_repo=config["hf_dataset_repo"],
+        hf_dataset_split=config["hf_dataset_split"],
+        hf_token=config["hf_token"],
+    )
+    logger.info(f"✅ Loaded {len(dataset)} episodes from {dataset_source}")
 
     rubric = vf.Rubric(
         funcs=[
@@ -232,7 +240,7 @@ def load_environment() -> NegotiationEnv:
             no_reveal_penalty,
             concession_rate_penalty,
         ],
-        weights=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        weights=[3.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
     )
 
     env = NegotiationEnv(

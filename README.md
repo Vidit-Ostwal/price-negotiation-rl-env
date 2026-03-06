@@ -24,11 +24,14 @@ Required:
 - `OPENAI_API_KEY`
 - `SELLER_MODEL`
 - `OPENAI_API_BASE`
-- `DATASET_PATH`
 
 Optional:
 
 - `MAX_TURNS` (default `10`)
+- `HF_DATASET_REPO` (default `ViditOstwal/price-negotiation-datasets`)
+- `HF_DATASET_SPLIT` (default `train`)
+- `HF_TOKEN` (or `HUGGINGFACE_HUB_TOKEN`) for private HF datasets
+- `DATASET_PATH` local fallback path (default `dataset.json`)
 
 Example `.env`:
 
@@ -36,13 +39,15 @@ Example `.env`:
 OPENAI_API_KEY=sk-...
 SELLER_MODEL=openai/gpt-4.1-mini
 OPENAI_API_BASE=https://api.openai.com/v1
+HF_DATASET_REPO=ViditOstwal/price-negotiation-datasets
+HF_DATASET_SPLIT=train
 DATASET_PATH=dataset.json
 MAX_TURNS=10
 ```
 
 ## Runtime Flow
 
-1. `load_environment()` validates env vars and loads dataset.
+1. `load_environment()` validates env vars and loads dataset (HF `train` split first, then local `dataset.json` fallback).
 2. Buyer sends an action (`<action>OFFER $X</action>`, `ACCEPT`, or `WALK`).
 3. Env parses buyer action and updates state.
 4. Env calls seller model via `litellm.acompletion(...)`.
@@ -119,11 +124,27 @@ LLM mode:
 uv run python generators/generate_dataset.py --mode llm --n 100 --output dataset.json --seed 42
 ```
 
+LLM mode + push to Hugging Face Hub:
+
+```bash
+HF_TOKEN=hf_... \
+HF_DATASET_REPO=your-hf-username/price-negotiation-dataset \
+uv run python generators/generate_dataset.py \
+  --mode llm --n 100 --output dataset.json --seed 42 \
+  --push-to-hf --hf-split train
+```
+
 LLM mode env vars:
 
 - Required: `OPENAI_API_KEY`
 - Optional: `OPENAI_API_BASE` (default `https://api.openai.com/v1`)
 - Optional: `GENERATOR_MODEL` (default `gpt-4o-mini`)
+- Optional for HF push: `HF_TOKEN` (or `HUGGINGFACE_HUB_TOKEN`)
+- Optional for HF push: `HF_DATASET_REPO` (or `HF_REPO_ID`)
+
+HF write modes:
+- `append` (default): load existing split and append newly generated rows before push
+- `overwrite`: replace the target split with newly generated rows
 
 `generators/generate_dataset.py` auto-loads missing values from repo-root `.env` before validation.
 

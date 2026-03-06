@@ -17,11 +17,13 @@ import json
 import uuid
 import random
 import argparse
+import time
 from typing import Optional
 from pathlib import Path
 
 from generators.base import CATEGORIES
 from generators.template import TemplateGenerator
+from datasets import Dataset, concatenate_datasets, load_dataset
 
 
 def _load_dotenv(dotenv_path: str = ".env") -> None:
@@ -78,6 +80,112 @@ def _validate_llm_env() -> dict:
         "api_base": api_base,
         "model": model,
     }
+
+
+def _resolve_hf_push_env(repo_id_arg: Optional[str], token_arg: Optional[str]) -> dict:
+    """
+    Resolve and validate Hugging Face Hub settings for dataset push.
+
+    Supported env vars:
+    - HF_DATASET_REPO or HF_REPO_ID
+    - HF_TOKEN or HUGGINGFACE_HUB_TOKEN
+    """
+    _load_dotenv()
+
+    repo_id = repo_id_arg or os.getenv("HF_DATASET_REPO") or os.getenv("HF_REPO_ID")
+    token = token_arg or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACE_HUB_TOKEN")
+
+    if not repo_id:
+        print("Error: missing Hugging Face dataset repo id.")
+        print("Set --hf-repo-id or one of: HF_DATASET_REPO, HF_REPO_ID")
+        sys.exit(1)
+
+    if not token:
+        print("Error: missing Hugging Face token.")
+        print("Set --hf-token or one of: HF_TOKEN, HUGGINGFACE_HUB_TOKEN")
+        sys.exit(1)
+
+    return {
+        "repo_id": repo_id,
+        "token": token,
+    }
+
+
+def push_dataset_to_hf(
+    episodes: list,
+    repo_id: str,
+    token: str,
+    split: str = "train",
+    private: bool = False,
+    write_mode: str = "overwrite",
+    commit_message: Optional[str] = None,
+) -> None:
+    """Push generated episodes to Hugging Face Hub as a datasets split.
+
+    write_mode:
+    - overwrite: replace target split with generated rows
+    - append: append generated rows to existing split (if present)
+    """
+    if not episodes:
+        print("Error: no episodes to push.")
+        sys.exit(1)
+
+    ds_new = Dataset.from_list(episodes)
+    ds_to_push = ds_new
+
+    if write_mode == "append":
+        try:
+            ds_existing = load_dataset(repo_id, split=split, token=token)
+            ds_to_push = concatenate_datasets([ds_existing, ds_new])
+            print(
+                f"  HF append mode: existing={len(ds_existing)} + new={len(ds_new)} -> total={len(ds_to_push)}"
+            )
+        except Exception as e:
+            print(f"  HF append mode: could not load existing split ({type(e).__name__}); creating split with new rows.")
+
+    msg = commit_message or (
+        f"{'Append' if write_mode == 'append' else 'Overwrite'} negotiation dataset "
+        f"(new_rows={len(ds_new)}, split={split})"
+    )
+    ds_to_push.push_to_hub(
+        repo_id=repo_id,
+        split=split,
+        token=token,
+        private=private,
+        commit_message=msg,
+    )
+
+
+def _render_progress(done: int, total: int, start_time: float, mode_label: str) -> None:
+    """Render boxed progress UI for generation."""
+    bar_width = 32
+    inner_width = 78
+    ratio = (done / total) if total > 0 else 1.0
+    filled = int(bar_width * ratio)
+    bar = "#" * filled + "-" * (bar_width - filled)
+    elapsed = time.time() - start_time
+    rate = (done / elapsed) if elapsed > 0 else 0.0
+    eta = ((total - done) / rate) if rate > 0 else 0.0
+
+    def _box_line(text: str) -> str:
+        return "|" + text[:inner_width].ljust(inner_width) + "|"
+
+    lines = [
+        "+" + "-" * inner_width + "+",
+        _box_line(f" Dataset Generation ({mode_label})"),
+        _box_line(f" Progress: [{bar}] {done:>4}/{total:<4} ({ratio*100:5.1f}%)"),
+        _box_line(f" Speed: {rate:7.2f} ep/s   Elapsed: {elapsed:7.1f}s   ETA: {eta:7.1f}s"),
+        "+" + "-" * inner_width + "+",
+    ]
+
+    can_rewrite = sys.stdout.isatty()
+    if getattr(_render_progress, "_drawn", False) and can_rewrite:
+        sys.stdout.write("\x1b[5F")
+    elif not getattr(_render_progress, "_drawn", False):
+        _render_progress._drawn = True
+
+    sys.stdout.write("\n".join(lines) + "\n")
+    sys.stdout.flush()
 
 # ---------------------------------------------------------------------------
 # PROMPT TEMPLATES  (unchanged)
@@ -231,8 +339,22 @@ def generate_episode(generator, category=None) -> dict:
 # DATASET GENERATOR  (unchanged)
 # ---------------------------------------------------------------------------
 
-def generate_dataset(generator, n: int, balanced: bool = True) -> list:
+def generate_dataset(generator, n: int, balanced: bool = True, show_tui: bool = True) -> list:
     episodes = []
+    generated = 0
+    start_time = time.time()
+    mode_label = "balanced" if balanced else "unbalanced"
+
+    if show_tui:
+        _render_progress._drawn = False
+        _render_progress(done=0, total=n, start_time=start_time, mode_label=mode_label)
+
+    def _append_episode(cat=None):
+        nonlocal generated
+        episodes.append(generate_episode(generator, cat))
+        generated += 1
+        if show_tui:
+            _render_progress(done=generated, total=n, start_time=start_time, mode_label=mode_label)
 
     if balanced:
         per_cat   = n // len(CATEGORIES)
@@ -240,10 +362,10 @@ def generate_dataset(generator, n: int, balanced: bool = True) -> list:
         for i, cat in enumerate(CATEGORIES):
             count = per_cat + (1 if i < remainder else 0)
             for _ in range(count):
-                episodes.append(generate_episode(generator, cat))
+                _append_episode(cat)
     else:
         for _ in range(n):
-            episodes.append(generate_episode(generator))
+            _append_episode()
 
     random.shuffle(episodes)
 
@@ -264,11 +386,27 @@ if __name__ == "__main__":
     parser.add_argument("--n",        type=int,   default=100,            help="Number of episodes")
     parser.add_argument("--output",   type=str,   default="dataset.json", help="Output file path")
     parser.add_argument("--mode",     type=str,   default="template",     choices=["template", "llm"], help="Generator mode")
-    parser.add_argument("--balanced", action="store_true", default=True,  help="Balance across categories")
+    bal_group = parser.add_mutually_exclusive_group()
+    bal_group.add_argument("--balanced",   dest="balanced", action="store_true",  default=True,  help="Balance across categories")
+    bal_group.add_argument("--unbalanced", dest="balanced", action="store_false", help="Sample categories randomly")
     parser.add_argument("--seed",     type=int,   default=42,             help="Random seed")
+    parser.add_argument("--push-to-hf",      action="store_true", help="Push generated dataset to Hugging Face Hub")
+    parser.add_argument("--hf-repo-id",      type=str, default=None, help="HF dataset repo id (e.g. username/repo)")
+    parser.add_argument("--hf-token",        type=str, default=None, help="HF token (or set HF_TOKEN in env)")
+    parser.add_argument("--hf-split",        type=str, default="train", help="Dataset split name for Hub push")
+    parser.add_argument("--hf-private",      action="store_true", help="Create/update private dataset repo")
+    parser.add_argument(
+        "--hf-write-mode",
+        type=str,
+        choices=["overwrite", "append"],
+        default="append",
+        help="How to write to HF split: overwrite existing split or append to it",
+    )
+    parser.add_argument("--hf-commit-message", type=str, default=None, help="Optional Hub commit message")
     args = parser.parse_args()
 
     random.seed(args.seed)
+    _load_dotenv()
 
     # Select generator
     if args.mode == "llm":
@@ -291,6 +429,20 @@ if __name__ == "__main__":
         json.dump(dataset, f, indent=2)
 
     print(f"\n  Saved to {args.output}")
+
+    if args.push_to_hf:
+        hf_env = _resolve_hf_push_env(args.hf_repo_id, args.hf_token)
+        print(f"  Pushing to Hugging Face Hub: {hf_env['repo_id']} (split={args.hf_split})")
+        push_dataset_to_hf(
+            episodes=dataset,
+            repo_id=hf_env["repo_id"],
+            token=hf_env["token"],
+            split=args.hf_split,
+            private=args.hf_private,
+            write_mode=args.hf_write_mode,
+            commit_message=args.hf_commit_message,
+        )
+        print(f"  Push complete: https://huggingface.co/datasets/{hf_env['repo_id']}")
 
     ep = dataset[0]
     print(f"\n  Sample: {ep['product']['name']} ({ep['valuations']['difficulty']})")

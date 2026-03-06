@@ -24,12 +24,44 @@ GENERATOR_MODEL=gpt-4o-mini \
 uv run python generators/generate_dataset.py --n 100 --mode llm --output dataset.json --seed 42
 ```
 
+Generate and push directly to Hugging Face Hub:
+
+```bash
+HF_TOKEN=hf_... \
+HF_DATASET_REPO=your-hf-username/price-negotiation-dataset \
+uv run python generators/generate_dataset.py \
+  --mode llm --n 100 --output dataset.json --seed 42 \
+  --push-to-hf --hf-split train
+```
+
 Notes:
 - `OPENAI_API_KEY` is required for `--mode llm`
 - `OPENAI_API_BASE` defaults to `https://api.openai.com/v1`
 - `GENERATOR_MODEL` defaults to `gpt-4o-mini`
 - missing values are auto-loaded from repo-root `.env` before validation
 - balancing is effectively on by default in current CLI behavior
+- use `--unbalanced` to disable category balancing
+- for HF push, token can be provided by `--hf-token` or env (`HF_TOKEN` / `HUGGINGFACE_HUB_TOKEN`)
+- for HF push, repo can be provided by `--hf-repo-id` or env (`HF_DATASET_REPO` / `HF_REPO_ID`)
+
+## Hugging Face Push (CLI)
+
+`generators/generate_dataset.py` now supports pushing the generated dataset split directly to Hugging Face Hub.
+
+Flags:
+- `--push-to-hf`: enable push after local JSON write
+- `--hf-repo-id`: dataset repo id (`username/repo`)
+- `--hf-token`: HF token (otherwise from env)
+- `--hf-split`: split name (default `train`)
+- `--hf-private`: create/update private repo
+- `--hf-write-mode`: `append` (default) or `overwrite`
+- `--hf-commit-message`: custom commit message
+
+Examples:
+- append to existing split:
+  - `--push-to-hf --hf-split train` (default behavior)
+- overwrite target split:
+  - `--push-to-hf --hf-split train --hf-write-mode overwrite`
 
 ## Generation Pipeline (Code-Level)
 
