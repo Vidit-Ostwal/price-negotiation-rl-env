@@ -2,7 +2,7 @@
 name = "buyer-seller"
 description = "Multi-turn buyer-seller negotiation environment for verifiers."
 tags = ["negotiation", "rl", "train", "eval"]
-version = "0.1.0"
+version = "0.1.2"
 requires-python = ">=3.10"
 dependencies = [
     "datasets>=4.0.0",
@@ -15,7 +15,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["buyer_seller.py", "rewards.py", "utils.py", "pyproject.toml"]
+include = ["buyer_seller.py", "rewards.py", "utils.py", "dataset.json", "pyproject.toml"]
 
 [tool.verifiers.eval]
 num_examples = 5
