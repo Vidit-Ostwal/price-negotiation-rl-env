@@ -62,15 +62,24 @@ Important seller safety rules enforced in code:
 
 ## Rewards
 
-Equal-weight rubric with 7 rewards:
+Rubric with 7 rewards (`surplus_reward` weighted 3x, others 1x):
 
 - `surplus_reward`
 - `walkaway_penalty`
 - `format_reward`
 - `efficiency_bonus`
 - `anchoring_reward`
-- `no_reveal_penalty`
-- `concession_rate_penalty`
+- `concession_rate_reward`
+- `decreasing_concessions_reward`
+
+Reward targets:
+- `surplus_reward`: maximize buyer value capture on deals.
+- `walkaway_penalty`: reward correct outcome decisions (close when feasible, walk when infeasible).
+- `format_reward`: keep buyer action tags consistently valid.
+- `efficiency_bonus`: finish successful deals in fewer turns.
+- `anchoring_reward`: encourage a strong but realistic opening anchor near the ideal point.
+- `concession_rate_reward`: discourage large per-turn upward concessions.
+- `decreasing_concessions_reward`: encourage concession sequences that shrink over time.
 
 See `rewards.py` for exact formulas.
 
@@ -145,6 +154,7 @@ LLM mode env vars:
 HF write modes:
 - `append` (default): load existing split and append newly generated rows before push
 - `overwrite`: replace the target split with newly generated rows
+- For `--mode llm` + `--push-to-hf`, the generator checkpoints by default every `100` rows (`--hf-push-every`) so partial progress is preserved if a later step fails.
 
 `generators/generate_dataset.py` auto-loads missing values from repo-root `.env` before validation.
 

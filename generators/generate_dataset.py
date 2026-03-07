@@ -377,6 +377,70 @@ def generate_dataset(generator, n: int, balanced: bool = True, show_tui: bool = 
 
     return episodes
 
+
+def _build_category_plan(n: int, balanced: bool) -> list[Optional[str]]:
+    """Build per-episode category plan."""
+    if not balanced:
+        return [None for _ in range(n)]
+
+    plan: list[Optional[str]] = []
+    per_cat = n // len(CATEGORIES)
+    remainder = n % len(CATEGORIES)
+    for i, cat in enumerate(CATEGORIES):
+        count = per_cat + (1 if i < remainder else 0)
+        plan.extend([cat] * count)
+    return plan
+
+
+def generate_dataset_with_checkpoints(
+    generator,
+    n: int,
+    balanced: bool,
+    checkpoint_size: int,
+    checkpoint_callback,
+    show_tui: bool = True,
+) -> list:
+    """
+    Generate dataset and invoke checkpoint_callback every checkpoint_size episodes.
+    callback signature: callback(checkpoint_rows: list[dict], generated_count: int, total_count: int)
+    """
+    episodes: list[dict] = []
+    chunk: list[dict] = []
+    generated = 0
+    start_time = time.time()
+    mode_label = "balanced" if balanced else "unbalanced"
+    plan = _build_category_plan(n=n, balanced=balanced)
+
+    if show_tui:
+        _render_progress._drawn = False
+        _render_progress(done=0, total=n, start_time=start_time, mode_label=mode_label)
+
+    for cat in plan:
+        ep = generate_episode(generator, cat)
+        episodes.append(ep)
+        chunk.append(ep)
+        generated += 1
+
+        if show_tui:
+            _render_progress(done=generated, total=n, start_time=start_time, mode_label=mode_label)
+
+        if len(chunk) >= checkpoint_size:
+            checkpoint_callback(chunk, generated, n)
+            chunk = []
+
+    if chunk:
+        checkpoint_callback(chunk, generated, n)
+
+    random.shuffle(episodes)
+
+    difficulties = [e["valuations"]["difficulty"] for e in episodes]
+    print(f"\n  Generated {len(episodes)} episodes")
+    for d in ["easy", "medium", "hard", "no_deal"]:
+        c = difficulties.count(d)
+        print(f"  {d:10s}: {c:4d}  ({100*c/len(episodes):.1f}%)")
+
+    return episodes
+
 # ---------------------------------------------------------------------------
 # MAIN  -- single entry point
 # ---------------------------------------------------------------------------
@@ -402,6 +466,12 @@ if __name__ == "__main__":
         default="append",
         help="How to write to HF split: overwrite existing split or append to it",
     )
+    parser.add_argument(
+        "--hf-push-every",
+        type=int,
+        default=100,
+        help="When using --mode llm + --push-to-hf, append checkpoints every N episodes",
+    )
     parser.add_argument("--hf-commit-message", type=str, default=None, help="Optional Hub commit message")
     args = parser.parse_args()
 
@@ -422,15 +492,52 @@ if __name__ == "__main__":
         generator = TemplateGenerator()
         print("Mode: template -- using hardcoded product bank")
 
-    print(f"Generating {args.n} episodes...")
-    dataset = generate_dataset(generator, args.n, balanced=args.balanced)
+    checkpoint_push = args.push_to_hf and args.mode == "llm"
+    hf_env = None
+    if checkpoint_push:
+        hf_env = _resolve_hf_push_env(args.hf_repo_id, args.hf_token)
+        if args.hf_write_mode != "append":
+            print("  Info: switching HF write mode to append for checkpointed LLM pushes.")
+        checkpoint_size = max(1, args.hf_push_every)
+        print(f"Generating {args.n} episodes with checkpoint pushes every {checkpoint_size} episodes...")
+
+        def _push_checkpoint(rows: list[dict], generated_count: int, total_count: int) -> None:
+            start_idx = generated_count - len(rows) + 1
+            end_idx = generated_count
+            print(
+                f"\n  HF checkpoint push ({start_idx}-{end_idx}/{total_count}) "
+                f"to {hf_env['repo_id']}[{args.hf_split}]"
+            )
+            push_dataset_to_hf(
+                episodes=rows,
+                repo_id=hf_env["repo_id"],
+                token=hf_env["token"],
+                split=args.hf_split,
+                private=args.hf_private,
+                write_mode="append",
+                commit_message=(
+                    args.hf_commit_message
+                    or f"Append checkpoint rows {start_idx}-{end_idx} (split={args.hf_split})"
+                ),
+            )
+
+        dataset = generate_dataset_with_checkpoints(
+            generator=generator,
+            n=args.n,
+            balanced=args.balanced,
+            checkpoint_size=checkpoint_size,
+            checkpoint_callback=_push_checkpoint,
+        )
+    else:
+        print(f"Generating {args.n} episodes...")
+        dataset = generate_dataset(generator, args.n, balanced=args.balanced)
 
     with open(args.output, "w") as f:
         json.dump(dataset, f, indent=2)
 
     print(f"\n  Saved to {args.output}")
 
-    if args.push_to_hf:
+    if args.push_to_hf and not checkpoint_push:
         hf_env = _resolve_hf_push_env(args.hf_repo_id, args.hf_token)
         print(f"  Pushing to Hugging Face Hub: {hf_env['repo_id']} (split={args.hf_split})")
         push_dataset_to_hf(

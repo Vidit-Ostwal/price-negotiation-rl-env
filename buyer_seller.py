@@ -35,13 +35,11 @@ from rewards import (
     format_reward,
     efficiency_bonus,
     anchoring_reward,
-    no_reveal_penalty,
-    concession_rate_penalty,
+    concession_rate_reward,
+    decreasing_concessions_reward,
 )
 
 logger = logging.getLogger(__name__)
-
-MAX_TURNS_DEFAULT = 10
 
 
 def _init_state(episode: dict) -> dict:
@@ -77,7 +75,7 @@ class NegotiationEnv(vf.MultiTurnEnv):
         seller_api_key: str,
         seller_model:   str,
         api_base:       str,
-        max_turns:      int = MAX_TURNS_DEFAULT,
+        max_turns:      int,
         **kwargs,
     ):
         super().__init__(dataset=dataset, rubric=rubric, max_turns=max_turns, **kwargs)
@@ -88,6 +86,7 @@ class NegotiationEnv(vf.MultiTurnEnv):
     async def setup_state(self, state: State) -> State:
         episode = state["info"]
         state.update(_init_state(episode))
+        state["max_turns"] = self.max_turns
         state["seller_errors"] = []
         return state
 
@@ -237,8 +236,8 @@ def load_environment() -> NegotiationEnv:
             format_reward,
             efficiency_bonus,
             anchoring_reward,
-            no_reveal_penalty,
-            concession_rate_penalty,
+            concession_rate_reward,
+            decreasing_concessions_reward,
         ],
         weights=[3.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
     )

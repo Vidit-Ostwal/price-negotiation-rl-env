@@ -55,11 +55,16 @@ Flags:
 - `--hf-split`: split name (default `train`)
 - `--hf-private`: create/update private repo
 - `--hf-write-mode`: `append` (default) or `overwrite`
+- `--hf-push-every`: for `--mode llm` + `--push-to-hf`, append every N rows (default `100`)
 - `--hf-commit-message`: custom commit message
 
 Examples:
 - append to existing split:
   - `--push-to-hf --hf-split train` (default behavior)
+- checkpoint append every 100 rows (default for LLM push):
+  - `--mode llm --push-to-hf --hf-split train`
+- checkpoint append every 50 rows:
+  - `--mode llm --push-to-hf --hf-split train --hf-push-every 50`
 - overwrite target split:
   - `--push-to-hf --hf-split train --hf-write-mode overwrite`
 

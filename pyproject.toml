@@ -2,7 +2,7 @@
 name = "buyer-seller"
 description = "Multi-turn buyer-seller negotiation environment for verifiers."
 tags = ["negotiation", "rl", "train", "eval"]
-version = "0.1.7"
+version = "0.1.10"
 requires-python = ">=3.10"
 dependencies = [
     "datasets>=4.0.0",
