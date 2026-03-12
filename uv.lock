@@ -227,6 +227,7 @@ version = "0.1.10"
 source = { editable = "." }
 dependencies = [
     { name = "datasets" },
+    { name = "huggingface-hub" },
     { name = "litellm" },
     { name = "verifiers" },
 ]
@@ -234,6 +235,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "datasets", specifier = ">=4.0.0" },
+    { name = "huggingface-hub", specifier = ">=0.26.0" },
     { name = "litellm", specifier = ">=1.82.0" },
     { name = "verifiers", specifier = ">=0.1.10" },
 ]

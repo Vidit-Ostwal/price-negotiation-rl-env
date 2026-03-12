@@ -28,6 +28,31 @@ PRODUCT_TEMPLATES = {
         {"name": "Oil Painting French Countryside 1940s", "description": "Unsigned impressionist landscape, 24x36 inches. Original gilt frame. Minor craquelure.", "market_price": 1800, "haggle_norm": "high", "typical_discount_pct": 30},
         {"name": "Bernard Buffet Lithograph", "description": "Signed and numbered 42/150. Clown series 1967. Some yellowing on margins.", "market_price": 2800, "haggle_norm": "high", "typical_discount_pct": 25},
     ],
+    "furniture": [
+        {"name": "Herman Miller Eames Lounge Chair Replica", "description": "Walnut veneer shell with black leather cushions. Frame is solid, with scuffs on one armrest.", "market_price": 950, "haggle_norm": "medium", "typical_discount_pct": 20},
+        {"name": "Mid-Century Danish Teak Sideboard", "description": "1960s sideboard with sliding doors and original pulls. Light ring marks on top, drawers run smoothly.", "market_price": 2400, "haggle_norm": "high", "typical_discount_pct": 25},
+        {"name": "Restoration Hardware Zinc-Top Dining Table", "description": "Seats eight and has a heavy steel base. Top has patina and a few shallow dents from use.", "market_price": 1600, "haggle_norm": "medium", "typical_discount_pct": 20},
+    ],
+    "jewelry": [
+        {"name": "14K Gold Sapphire Halo Ring", "description": "Oval blue sapphire with small diamond halo. Band shows surface wear but stones are secure.", "market_price": 2200, "haggle_norm": "high", "typical_discount_pct": 15},
+        {"name": "Vintage Tiffany Sterling Cuff Bracelet", "description": "Heavy sterling silver cuff from the 1990s. Minor scratches from wear, includes pouch.", "market_price": 480, "haggle_norm": "medium", "typical_discount_pct": 15},
+        {"name": "Mikimoto Pearl Strand Necklace", "description": "Akoya cultured pearls with silver clasp. Pearls have strong luster, clasp has slight tarnish.", "market_price": 1800, "haggle_norm": "medium", "typical_discount_pct": 18},
+    ],
+    "musical_instruments": [
+        {"name": "Fender American Standard Stratocaster", "description": "2012 electric guitar with maple neck and sunburst finish. Frets have mild wear, electronics are clean.", "market_price": 950, "haggle_norm": "medium", "typical_discount_pct": 15},
+        {"name": "Yamaha U1 Upright Piano", "description": "1987 studio upright, recently tuned. Cabinet has a few scratches and one chipped caster cup.", "market_price": 3800, "haggle_norm": "high", "typical_discount_pct": 20},
+        {"name": "Selmer Paris Series II Alto Saxophone", "description": "Professional horn with original lacquer at roughly 85 percent. Pads seal well, bell has small ding.", "market_price": 2900, "haggle_norm": "high", "typical_discount_pct": 15},
+    ],
+    "sports_outdoors": [
+        {"name": "Trek Fuel EX 8 Mountain Bike", "description": "Full-suspension trail bike with carbon front triangle. Drivetrain is clean, rear rim has cosmetic scratches.", "market_price": 2100, "haggle_norm": "medium", "typical_discount_pct": 18},
+        {"name": "Hobie Mirage Outback Kayak", "description": "Pedal-drive fishing kayak with seat and storage bins. Hull has normal beach rash and one repaired scrape.", "market_price": 1450, "haggle_norm": "medium", "typical_discount_pct": 20},
+        {"name": "Bowflex SelectTech 552 Dumbbell Pair", "description": "Adjustable dumbbells with trays included. Dial mechanism works smoothly, handles show light wear.", "market_price": 260, "haggle_norm": "low", "typical_discount_pct": 12},
+    ],
+    "luxury_fashion": [
+        {"name": "Louis Vuitton Keepall 50 Monogram", "description": "Classic duffel with honey patina handles and intact canvas. Corner wear is visible, zipper runs smoothly.", "market_price": 1350, "haggle_norm": "medium", "typical_discount_pct": 15},
+        {"name": "Burberry Kensington Trench Coat", "description": "Women's size 8 long trench in beige cotton gabardine. Lining is clean, belt buckle has minor scratches.", "market_price": 720, "haggle_norm": "medium", "typical_discount_pct": 18},
+        {"name": "Gucci Horsebit Loafers", "description": "Black leather loafers with gold-tone horsebit hardware. Soles are worn but uppers remain in good shape.", "market_price": 340, "haggle_norm": "medium", "typical_discount_pct": 15},
+    ],
 }
 
 

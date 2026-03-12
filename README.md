@@ -10,7 +10,7 @@ Multi-turn buyer/seller negotiation environment for `verifiers`.
 - `buyer_seller.py`: `NegotiationEnv` + `load_environment()` entrypoint
 - `utils.py`: `.env` loading, env validation, dataset loading, role-flip helper
 - `rewards.py`: action parser + 7 reward functions
-- `generators/generate_dataset.py`: synthetic dataset generator (template + LLM modes)
+- `generators/generate_dataset.py`: synthetic dataset generator (template + OpenAI-style LLM + HF chat LLM modes)
 - `dataset.json`: sample dataset (10 episodes)
 - `test_seller_model_smoke.py`: real seller API smoke test (no mocks)
 - `generator.md`: dataset schema + generation guide
@@ -133,6 +133,14 @@ LLM mode:
 uv run python generators/generate_dataset.py --mode llm --n 100 --output dataset.json --seed 42
 ```
 
+HF LLM mode:
+
+```bash
+HF_LLM_MODEL=Qwen/Qwen2.5-72B-Instruct:novita \
+HF_TOKEN=hf_... \
+uv run python generators/generate_dataset.py --mode hf-llm --n 100 --output dataset.json --seed 42
+```
+
 LLM mode + push to Hugging Face Hub:
 
 ```bash
@@ -148,21 +156,44 @@ LLM mode env vars:
 - Required: `OPENAI_API_KEY`
 - Optional: `OPENAI_API_BASE` (default `https://api.openai.com/v1`)
 - Optional: `GENERATOR_MODEL` (default `gpt-4o-mini`)
+- Required for `--mode hf-llm`: `HF_LLM_MODEL`
+- Required for `--mode hf-llm`: `HF_TOKEN` or `HUGGINGFACE_HUB_TOKEN`
+- Optional for `--mode hf-llm`: `HF_LLM_API_BASE`
 - Optional for HF push: `HF_TOKEN` (or `HUGGINGFACE_HUB_TOKEN`)
 - Optional for HF push: `HF_DATASET_REPO` (or `HF_REPO_ID`)
 
 HF write modes:
 - `append` (default): load existing split and append newly generated rows before push
 - `overwrite`: replace the target split with newly generated rows
-- For `--mode llm` + `--push-to-hf`, the generator checkpoints by default every `100` rows (`--hf-push-every`) so partial progress is preserved if a later step fails.
+- For `--mode llm` or `--mode hf-llm` with `--push-to-hf`, the generator checkpoints by default every `100` rows (`--hf-push-every`) so partial progress is preserved if a later step fails.
 
 `generators/generate_dataset.py` auto-loads missing values from repo-root `.env` before validation.
 
-Note: category balancing is effectively enabled by default in current script behavior.
+Note: category balancing is enabled by default in current script behavior.
+
+## Dataset Categories
+
+The generator currently samples from 10 categories:
+
+- `antiques`
+- `electronics`
+- `collectibles`
+- `vehicles`
+- `art`
+- `furniture`
+- `jewelry`
+- `musical_instruments`
+- `sports_outdoors`
+- `luxury_fashion`
+
+In template mode, every category has a curated product bank. In LLM modes, the category is passed to the model and the product is generated dynamically.
 
 ## Current Sample Dataset (`dataset.json`)
 
 - Episodes: `10`
-- Categories: balanced (`2` each across 5 categories)
+- Categories: depends on the file contents; balanced generation now spreads rows across 10 categories
 - Difficulties: `easy/medium/hard/no_deal` mix
-- Generator version: `1.1-template`
+- Generator version:
+  - `1.1-template` for template generation
+  - `2.0-llm` for LiteLLM/OpenAI-style generation
+  - `2.1-hf-llm` for Hugging Face chat generation

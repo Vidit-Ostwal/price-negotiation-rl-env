@@ -6,7 +6,18 @@ from abc import ABC, abstractmethod
 
 REQUIRED_KEYS = {"name", "description", "market_price", "haggle_norm", "typical_discount_pct"}
 VALID_HAGGLE   = {"low", "medium", "high"}
-CATEGORIES     = ["antiques", "electronics", "collectibles", "vehicles", "art"]
+CATEGORIES     = [
+    "antiques",
+    "electronics",
+    "collectibles",
+    "vehicles",
+    "art",
+    "furniture",
+    "jewelry",
+    "musical_instruments",
+    "sports_outdoors",
+    "luxury_fashion",
+]
 
 
 def validate_product(product: dict) -> dict:

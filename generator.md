@@ -1,11 +1,34 @@
 # Generator Guide
 
-This repository uses `generators/generate_dataset.py` as the dataset generation entrypoint.
+This repository uses [generators/generate_dataset.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/generate_dataset.py) as the dataset generation entrypoint.
 
 ## Modes
 
-- `template` (default): picks products from `generators/template.py`
-- `llm`: generates products via `generators/llm.py`; on repeated LLM failure it falls back to template
+- `template`: picks products from [generators/template.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/template.py)
+- `llm`: generates products via LiteLLM in [generators/llm.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/llm.py)
+- `hf-llm`: generates products via Hugging Face chat completions in [generators/llm.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/llm.py)
+
+Important behavior:
+- LLM modes no longer fall back to template generation
+- repeated generation failures now raise after `max_retries`
+- balanced sampling is enabled by default unless `--unbalanced` is passed
+
+## Categories
+
+The generator currently supports 10 categories from [generators/base.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/base.py):
+
+- `antiques`
+- `electronics`
+- `collectibles`
+- `vehicles`
+- `art`
+- `furniture`
+- `jewelry`
+- `musical_instruments`
+- `sports_outdoors`
+- `luxury_fashion`
+
+Template mode has curated examples for every category. LLM modes receive the category and generate the rest of the product fields.
 
 ## Run
 
@@ -24,240 +47,149 @@ GENERATOR_MODEL=gpt-4o-mini \
 uv run python generators/generate_dataset.py --n 100 --mode llm --output dataset.json --seed 42
 ```
 
+HF LLM mode:
+
+```bash
+HF_LLM_MODEL=Qwen/Qwen2.5-72B-Instruct:novita \
+HF_TOKEN=hf_... \
+uv run python generators/generate_dataset.py --n 100 --mode hf-llm --output dataset.json --seed 42
+```
+
 Generate and push directly to Hugging Face Hub:
 
 ```bash
 HF_TOKEN=hf_... \
 HF_DATASET_REPO=your-hf-username/price-negotiation-dataset \
 uv run python generators/generate_dataset.py \
-  --mode llm --n 100 --output dataset.json --seed 42 \
+  --mode hf-llm --n 100 --output dataset.json --seed 42 \
   --push-to-hf --hf-split train
 ```
 
-Notes:
-- `OPENAI_API_KEY` is required for `--mode llm`
-- `OPENAI_API_BASE` defaults to `https://api.openai.com/v1`
-- `GENERATOR_MODEL` defaults to `gpt-4o-mini`
-- missing values are auto-loaded from repo-root `.env` before validation
-- balancing is effectively on by default in current CLI behavior
-- use `--unbalanced` to disable category balancing
-- for HF push, token can be provided by `--hf-token` or env (`HF_TOKEN` / `HUGGINGFACE_HUB_TOKEN`)
-- for HF push, repo can be provided by `--hf-repo-id` or env (`HF_DATASET_REPO` / `HF_REPO_ID`)
+## Environment Variables
 
-## Hugging Face Push (CLI)
+`--mode llm`:
+- required: `OPENAI_API_KEY`
+- optional: `OPENAI_API_BASE` default `https://api.openai.com/v1`
+- optional: `GENERATOR_MODEL` default `gpt-4o-mini`
 
-`generators/generate_dataset.py` now supports pushing the generated dataset split directly to Hugging Face Hub.
+`--mode hf-llm`:
+- required: `HF_LLM_MODEL`
+- required: `HF_TOKEN` or `HUGGINGFACE_HUB_TOKEN`
+- optional: `HF_LLM_API_BASE`
 
-Flags:
-- `--push-to-hf`: enable push after local JSON write
-- `--hf-repo-id`: dataset repo id (`username/repo`)
-- `--hf-token`: HF token (otherwise from env)
-- `--hf-split`: split name (default `train`)
-- `--hf-private`: create/update private repo
-- `--hf-write-mode`: `append` (default) or `overwrite`
-- `--hf-push-every`: for `--mode llm` + `--push-to-hf`, append every N rows (default `100`)
-- `--hf-commit-message`: custom commit message
+HF dataset push:
+- optional CLI: `--hf-repo-id`, `--hf-token`, `--hf-split`, `--hf-private`, `--hf-write-mode`, `--hf-push-every`, `--hf-commit-message`
+- optional env: `HF_DATASET_REPO` or `HF_REPO_ID`
+- optional env: `HF_TOKEN` or `HUGGINGFACE_HUB_TOKEN`
 
-Examples:
-- append to existing split:
-  - `--push-to-hf --hf-split train` (default behavior)
-- checkpoint append every 100 rows (default for LLM push):
-  - `--mode llm --push-to-hf --hf-split train`
-- checkpoint append every 50 rows:
-  - `--mode llm --push-to-hf --hf-split train --hf-push-every 50`
-- overwrite target split:
-  - `--push-to-hf --hf-split train --hf-write-mode overwrite`
+The generator auto-loads missing values from repo-root `.env` before validation.
 
-## Generation Pipeline (Code-Level)
+## Pipeline
 
-1. `main` in `generators/generate_dataset.py` selects generator:
-- `TemplateGenerator()` for template mode
-- `LLMGenerator(...)` for llm mode
+1. [generate_dataset.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/generate_dataset.py) selects one generator implementation.
+2. A category plan is built from [CATEGORIES](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/base.py) based on `--balanced` or `--unbalanced`.
+3. [generate_episode(...)](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/episode.py) asks the generator for one product for the chosen category.
+4. The product is validated by [validate_product(...)](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/base.py).
+5. The episode builder applies market-price noise, samples buyer and seller private values, and formats buyer and seller prompts.
+6. The resulting rows are optionally checkpoint-pushed to HF during generation and always written to local JSON at the end.
 
-2. `generate_dataset(generator, n, balanced)` builds episode list:
-- balanced: split count across `CATEGORIES`
-- unbalanced: random category each episode
+## Product Generation Contract
 
-3. `generate_episode(generator, category)` builds one episode:
-- gets base product from `generator.generate(category)`
-- applies market noise
-- calls `sample_valuations(market_price)`
-- formats buyer/seller prompts
-- assembles final episode JSON
+All generators must return a dict with:
 
-4. Product validation is enforced by `validate_product` in `generators/base.py`:
-- required keys present
-- field types/ranges validated
+- `name`
+- `description`
+- `market_price`
+- `haggle_norm`
+- `typical_discount_pct`
 
-## Field-by-Field Attribute Reference
+Validation rules from [generators/base.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/base.py):
 
-## Top-Level
+- `name` and `description` must be non-empty strings
+- `market_price` must be between `10` and `100000`
+- `haggle_norm` must be one of `low`, `medium`, `high`
+- `typical_discount_pct` must be an integer in `0..50`
+
+## What The LLM Sees
+
+The generator passes only the category into the product-generation prompt. The model invents:
+
+- product name
+- product description
+- market price
+- haggling norm
+- typical discount percentage
+
+The product name is not provided ahead of time. It is generated by the model and then used later in the buyer and seller prompts.
+
+## Episode Schema
+
+Each generated row contains:
 
 - `episode_id`
-  - Meaning: unique identifier for one negotiation instance.
-  - Source: `str(uuid.uuid4())` in `generate_episode`.
-
 - `product`
-  - Meaning: market item attributes shared in prompts.
-  - Source: generator output + normalized fields.
-
 - `valuations`
-  - Meaning: hidden economics for buyer/seller and reward signals.
-  - Source: `sample_valuations(...)`.
-
-- `buyer_prompt`, `seller_prompt`
-  - Meaning: system instructions used during rollout.
-  - Source: `BUYER_PROMPT_TEMPLATE.format(...)`, `SELLER_PROMPT_TEMPLATE.format(...)`.
-
-- `information_asymmetry`
-  - Meaning: who has richer context.
-  - Source: hardcoded in `generate_episode`.
-
-- `metadata`
-  - Meaning: runtime constants/versioning.
-  - Source: hardcoded in `generate_episode`.
-
-## `product` fields
-
-- `name`
-  - Meaning: concrete listing title.
-  - Source:
-    - template mode: from `PRODUCT_TEMPLATES[category]`
-    - llm mode: from LLM JSON output
-
-- `category`
-  - Meaning: one of `antiques|electronics|collectibles|vehicles|art`.
-  - Source: input category passed to `generate_episode`.
-
-- `description`
-  - Meaning: negotiable condition details shown to both sides.
-  - Source: template text or LLM-generated text.
-
-- `market_price`
-  - Meaning: per-episode noisy market anchor used everywhere in prompts/valuation.
-  - Formula:
-    - base product price: `product["market_price"]`
-    - noise: `price_noise ~ Uniform(0.90, 1.10)`
-    - episode market: `round(base * price_noise, -1)`
-
-- `haggle_norm`
-  - Meaning: expected haggling intensity.
-  - Source: template/LLM product field.
-  - Valid values: `low|medium|high`.
-
-- `typical_discount_pct`
-  - Meaning: category-level expected discount pressure in seller prompt.
-  - Source: template/LLM product field.
-  - Validation range: integer `0..50` (base validator).
-
-## `valuations` fields (mathematical definitions)
-
-All are computed in `sample_valuations(market_price)`.
-
-Let `M = market_price`.
-
-- `buyer_true_value`
-  - Meaning: buyer's private max willingness-to-pay.
-  - Formula: `B = round(M * U(0.55, 0.90), -1)`.
-
-- `seller_reserve_price`
-  - Meaning: seller's private minimum acceptable price.
-  - Formula: `S = round(M * U(0.45, 0.75), -1)`.
-
-- `market_price`
-  - Meaning: repeats episode market anchor for convenience.
-  - Formula: `M` (integer).
-
-- `deal_possible`
-  - Meaning: whether generator labels overlap as deal-capable.
-  - Formula in current code: `B >= S`.
-
-- `zopa`
-  - Meaning: zone of possible agreement interval.
-  - Formula: `[S, B] if deal_possible else null`.
-
-- `zopa_width`
-  - Meaning: width of feasible overlap.
-  - Formula: `max(0, B - S)`.
-
-- `difficulty`
-  - Meaning: difficulty bucket by normalized overlap.
-  - Define `r = zopa_width / M`.
-  - Rules:
-    - `easy` if `r > 0.3`
-    - `medium` if `r > 0.1`
-    - `hard` if `r > 0`
-    - `no_deal` otherwise
-
-- `suggested_buyer_anchor`
-  - Meaning: suggested opening level used by reward shaping.
-  - Formula: `round(B * U(0.60, 0.75), -1)`.
-
-## Prompt fields
-
 - `buyer_prompt`
-  - Built from item details + `buyer_true_value` + `market_price`.
-  - Includes required action grammar:
-    - `<action>OFFER $X</action>`
-    - `<action>ACCEPT</action>`
-    - `<action>WALK</action>`
-
 - `seller_prompt`
-  - Built from item details + `seller_reserve_price` + `market_price` + `typical_discount_pct` + category context.
+- `information_asymmetry`
+- `metadata`
 
-## `information_asymmetry`
-
-- `seller_context = "full"`
-- `buyer_context = "sparse"`
-
-This is currently static in generated output.
-
-## `metadata`
-
-- `max_turns = 10`
-- `currency = "USD"`
-- `generator_version`
-  - `"2.0-llm"` when generator has `_call_llm` (LLM mode)
-  - otherwise `"1.1-template"`
-
-## LLM Mode Details
-
-`LLMGenerator._call_llm(...)` asks model for strict JSON with:
+`product` fields:
 - `name`
+- `category`
 - `description`
 - `market_price`
 - `haggle_norm`
 - `typical_discount_pct`
 
-Then:
-- strips code fences if present
-- parses JSON
-- validates via `validate_product`
-- retries up to `max_retries`
-- falls back to `TemplateGenerator` if still failing
+`valuations` fields from [sample_valuations(...)](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/episode.py):
+- `buyer_true_value`
+- `seller_reserve_price`
+- `market_price`
+- `zopa`
+- `zopa_width`
+- `deal_possible`
+- `difficulty`
+- `suggested_buyer_anchor`
 
-## Output Shape Example
+`metadata.generator_version` is:
+- `1.1-template` for template mode
+- `2.0-llm` for LiteLLM mode
+- `2.1-hf-llm` for Hugging Face chat mode
+
+## Hugging Face Mode Notes
+
+The HF generator uses chat completions, not `text_generation`. That matters for provider-routed models such as `Qwen/Qwen2.5-72B-Instruct:novita`, which are conversational models and may not support the text-generation task.
+
+Implementation details in [generators/llm.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/generators/llm.py):
+
+- the prompt is sent as one user message
+- the response is read from `response.choices[0].message.content`
+- code fences are stripped before JSON parsing
+- the parser tries to recover the first JSON object span before raising
+
+## Output Example
 
 ```json
 {
   "episode_id": "uuid",
   "product": {
-    "name": "item",
+    "name": "Vintage Test Camera",
     "category": "electronics",
-    "description": "...",
-    "market_price": 1230,
+    "description": "Well-kept 35mm film camera with minor cosmetic wear.",
+    "market_price": 500,
     "haggle_norm": "medium",
     "typical_discount_pct": 20
   },
   "valuations": {
-    "buyer_true_value": 980,
-    "seller_reserve_price": 760,
-    "market_price": 1230,
-    "zopa": [760, 980],
-    "zopa_width": 220,
+    "buyer_true_value": 380,
+    "seller_reserve_price": 280,
+    "market_price": 500,
+    "zopa": [280, 380],
+    "zopa_width": 100,
     "deal_possible": true,
     "difficulty": "medium",
-    "suggested_buyer_anchor": 650
+    "suggested_buyer_anchor": 250
   },
   "buyer_prompt": "...",
   "seller_prompt": "...",
@@ -268,19 +200,15 @@ Then:
   "metadata": {
     "max_turns": 10,
     "currency": "USD",
-    "generator_version": "1.1-template"
+    "generator_version": "2.1-hf-llm"
   }
 }
 ```
 
-## Compatibility with Environment
+## Compatibility
 
-Generated episodes are compatible with current runtime:
-- `utils._load_hf_dataset()` reads each episode and wraps it into `prompt` + `info`
-- `buyer_seller._init_state()` consumes `valuations`, `buyer_prompt`, `seller_prompt`
-- rewards in `rewards.py` use `buyer_true_value`, `zopa_width`, `deal_possible`, `metadata.max_turns`, `suggested_buyer_anchor`
+Generated episodes are compatible with the current environment runtime:
 
-Semantic caveat:
-- generator uses `deal_possible = (B >= S)`
-- some other logic may expect strict `B > S`
-- if you want strict semantics, change that expression in `sample_valuations`
+- [utils.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/utils.py) loads dataset rows into evaluation examples
+- [buyer_seller.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/buyer_seller.py) consumes `valuations`, `buyer_prompt`, and `seller_prompt`
+- [rewards.py](/Users/viditostwal/Desktop/price-negotiation-rl-env/rewards.py) uses fields such as `buyer_true_value`, `zopa_width`, `deal_possible`, and `suggested_buyer_anchor`
